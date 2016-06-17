@@ -62,11 +62,15 @@
                         </h1>
                     </div>
                     <group>
+                        <field name="parent_id"/>
                         <field name="project_id"/>
                     </group>
                     <notebook>
                         <page name="description" string="Description">
                             <field name="description" nolabel="True"/>
+                        </page>
+                        <page name="childs" string="Child WBS Elements">
+                            <field name="child_ids" nolabel="True"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -83,9 +87,13 @@
             <field name="model">project.wbs_element</field>
             <field name="arch" type="xml">
                 <search string="Search WBS Element">
+                    <field name="parent_id" string="Parent WBS Element"/>
                     <field name="project_id" string="Project"/>
                     <field name="name" string="WBS Element Name"/>
                     <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                    <filter name="parent_false"
+                            domain="[('parent_id','=',False)]"
+                            string="Level 1 WBS"/>
                 </search>
             </field>
         </record>
@@ -105,6 +113,23 @@
             </field>
         </record>
 
+        <record id="act_project_wbs_element_2_project_wbs_element_all"
+                model="ir.actions.act_window">
+            <field name="name">WBS Elements</field>
+            <field name="res_model">project.wbs_element</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{
+                'search_default_parent_id': [active_id],
+                'default_parent_id': active_id,
+            }</field>
+            <field name="search_view_id" ref="view_project_wbs_element_search_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Here you can create new child WBS Elements
+                </p>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="wbs_element_kanban_view">
             <field name="name">project.wbs_element.kanban</field>
             <field name="model">project.wbs_element</field>
@@ -114,6 +139,9 @@
                     <field name="code"/>
                     <field name="task_ids"/>
                     <field name="nbr_tasks"/>
+                    <field name="child_ids"/>
+                    <field name="nbr_childs"/>
+                    <field name="nbr_docs"/>
                     <field name="color"/>
                     <templates>
                         <t t-name="kanban-box">
@@ -144,6 +172,17 @@
 
                                 <div class="o_project_kanban_boxes">
                                     <div class="o_project_kanban_box">
+                                        <a name="%(act_project_wbs_element_2_project_wbs_element_all)d" type="action">
+                                            <span class="o_value"><t t-esc="record.nbr_childs.value"/></span>
+                                            <span class="o_label">WBS Elements</span>
+                                        </a>
+                                    </div>
+                                    <a t-if="record.nbr_docs.raw_value"
+                                       class="o_project_kanban_box" name="attachment_tree_view" type="object">
+                                        <span class="o_value"><t t-esc="record.nbr_docs.value"/></span>
+                                        <span class="o_label">Documents</span>
+                                    </a>
+                                    <div t-if="record.nbr_childs.raw_value == 0" class="o_project_kanban_box">
                                         <a name="%(act_project_wbs_element_2_project_task_all)d" type="action">
                                             <span class="o_value"><t t-esc="record.nbr_tasks.value"/></span>
                                             <span class="o_label">Tasks</span>
@@ -163,8 +202,9 @@
             <field name="res_model">project.wbs_element</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="context">{
-                'search_default_wbs_element_id': [active_id],
-                'default_wbs_element_id': active_id,
+                'search_default_project_id': [active_id],
+                'default_project_': active_id,
+                'search_default_parent_false': True,
             }</field>
             <field name="search_view_id"
                    ref="view_project_wbs_element_search_view"/>
