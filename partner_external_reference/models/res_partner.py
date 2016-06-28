@@ -23,7 +23,7 @@ class ResPartner(models.Model):
         # Make the other search
         names2 = []
         if name:
-            domain = [('reference', '=ilike', name + '%')]
+            domain = [('name', '=ilike', name + '%')]
             names2 = self.env['partner.external.reference'].search(
                 domain, limit=limit).name_get()
         # Merge both results
