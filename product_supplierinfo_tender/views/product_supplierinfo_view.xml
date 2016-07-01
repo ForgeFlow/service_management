@@ -41,6 +41,7 @@
                 <form position="inside">
                     <group>
                         <field name="tender_id"/>
+                        <field name="bid_id"/>
                     </group>
                 </form>
             </field>
@@ -54,6 +55,7 @@
             <field name="arch" type="xml">
                 <field name="date_end" position="after">
                     <field name="tender_id"/>
+                    <field name="bid_id"/>
                     <field name="approved_tender" string="Approved"/>
                     <field name="tender_state" invisible="True"/>
                     <button name="button_approve_tender"

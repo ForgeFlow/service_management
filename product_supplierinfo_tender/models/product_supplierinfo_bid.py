@@ -4,10 +4,12 @@
 from openerp import api, fields, models
 
 READONLY_STATES = {
-    'accept': [('readonly', True)],
-    'approve': [('readonly', True)],
+    'close': [('readonly', True)],
     'cancel': [('readonly', True)],
 }
+_TENDER_STATES = [('draft', 'Draft'), ('open', 'Call for Bids'),
+                  ('selection', 'Bid Selection'), ('done', 'Completed'),
+                  ('cancel', 'Cancelled')]
 
 
 class ProductSupplierinfoBid(models.Model):
@@ -17,12 +19,11 @@ class ProductSupplierinfoBid(models.Model):
 
     name = fields.Char(string='Reference', required=True, copy=False,
                        default='New', readonly=True)
-    state = fields.Selection([('draft', 'Draft'),
-                              ('accept', 'Accept'),
-                              ('approve', 'Approved'),
+    state = fields.Selection([('open', 'Open'),
+                              ('close', 'Closed'),
                               ('cancel', 'Cancelled')],
                              string='Status', select=True,
-                             copy=False, default='draft',
+                             copy=False, default='open',
                              track_visibility='onchange')
     tender_id = fields.Many2one(comodel_name='product.supplierinfo.tender',
                                 string='Tender', required=True,
@@ -30,6 +31,10 @@ class ProductSupplierinfoBid(models.Model):
                                 domain=[('state', 'in', ['draft',
                                                          'in_progress'])],
                                 track_visibility='always')
+    tender_state = fields.Selection(_TENDER_STATES,
+                                    string='Tender States',
+                                    related='tender_id.state',
+                                    readonly=True)
     partner_id = fields.Many2one('res.partner', string='Vendor', required=True,
                                  states=READONLY_STATES, change_default=True,
                                  track_visibility='always')
@@ -56,3 +61,8 @@ class ProductSupplierinfoBid(models.Model):
             vals['name'] = self.env['ir.sequence'].next_by_code(
                 'product.supplierinfo.bid') or '/'
         return super(ProductSupplierinfoBid, self).create(vals)
+
+    @api.multi
+    def button_close(self):
+        for rec in self:
+            rec.state = 'close'

@@ -77,23 +77,30 @@ class ProductSupplierinfoTender(models.Model):
 
     @api.multi
     def button_draft(self):
-        self.state = 'draft'
+        for rec in self:
+            rec.state = 'draft'
 
     @api.multi
     def button_open(self):
-        self.state = 'open'
+        for rec in self:
+            rec.state = 'open'
 
     @api.multi
     def button_selection(self):
-        self.state = 'selection'
+        for rec in self:
+            rec.state = 'selection'
+            rec.bid_ids.button_close()
 
     @api.multi
     def button_done(self):
-        self.state = 'done'
+        for rec in self:
+            rec.state = 'done'
 
     @api.multi
     def button_cancel(self):
-        self.state = 'cancel'
+        for rec in self:
+            rec.state = 'cancel'
+
 
     @api.model
     def _prepare_bid(self, tender, supplier):
