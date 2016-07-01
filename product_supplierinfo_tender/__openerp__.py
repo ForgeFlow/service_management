@@ -12,6 +12,7 @@
     "license": "LGPL-3",
     "depends": ['product'],
     "data": [
+        'security/ir.model.access.csv',
         'data/product_supplierinfo_tender_sequence.xml',
         'data/product_supplierinfo_bid_sequence.xml',
         'wizards/product_supplierinfo_tender_create_bid_view.xml',

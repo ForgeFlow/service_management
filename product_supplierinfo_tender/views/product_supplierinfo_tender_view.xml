@@ -11,8 +11,7 @@
                         <button name="button_draft"
                             states="open,cancel"
                             string="Reset"
-                            type="object"
-                            groups="product_supplierinfo_tender.group_product_supplierinfo_tender_manager"/>
+                            type="object"/>
                         <button name="button_open"
                             states="draft"
                             string="Confirm"
