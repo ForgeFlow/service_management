@@ -14,10 +14,11 @@
                         <div class="oe_title">
                             <h1>
                                 <field name="name"/>
-                                <field name="partner_id"/>
                             </h1>
                         </div>
                         <group>
+                            <field name="tender_id"/>
+                            <field name="partner_id"/>
                             <field name="currency_id" groups="base.group_multi_currency"/>
                             <field name="company_id"
                                    groups="base.group_multi_company"/>
@@ -55,11 +56,16 @@
             <field name="arch" type="xml">
                 <search string="Search Pricelist bids">
                     <field name="name"/>
+                    <field name="tender_id"/>
                     <field name="partner_id"/>
                     <field name="description"/>
                     <field name="date_received"/>
                     <field name="state"/>
                     <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                    <group expand="0" name="group" string="Group By">
+                        <filter string="Tender" domain=""
+                                context="{'group_by':'tender_id'}"/>
+                    </group>
                 </search>
             </field>
         </record>
