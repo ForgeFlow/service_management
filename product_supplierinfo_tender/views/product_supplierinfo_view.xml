@@ -60,13 +60,11 @@
                     <field name="tender_state" invisible="True"/>
                     <button name="button_approve_tender"
                             string="Approve" type="object"
-                            icon="fa-check"
-                            attrs="{'invisible': ['|',('tender_state', '!=', 'selection'),('approved_tender', '=', True)]}"/>
+                            icon="fa-check"/>
                     <button name="button_unapprove_tender"
                             string="Un-Approve"
                             type="object"
-                            icon="gtk-redo"
-                            attrs="{'invisible': ['|',('tender_state', '!=', 'selection'),('approved_tender', '=', False)]}"/>
+                            icon="gtk-redo"/>
                 </field>
             </field>
         </record>
