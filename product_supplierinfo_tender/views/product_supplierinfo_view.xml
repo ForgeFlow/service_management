@@ -42,6 +42,17 @@
                     <group>
                         <field name="tender_id"/>
                         <field name="bid_id"/>
+                        <field name="tender_state"/>
+                        <field name="approved_tender"/>
+                        <button name="button_approve_tender"
+                            string="Approve" type="object"
+                            icon="fa-check"
+                            attrs="{'invisible': ['|', ('tender_state', '!=', 'selection'), ('approved_tender', '=', True)]}"/>
+                        <button name="button_unapprove_tender"
+                            string="Un-Approve"
+                            type="object"
+                            icon="gtk-redo"
+                            attrs="{'invisible': ['|', ('tender_state', '!=', 'selection'), ('approved_tender', '=', False)]}"/>
                     </group>
                 </form>
             </field>
@@ -60,11 +71,13 @@
                     <field name="tender_state" invisible="True"/>
                     <button name="button_approve_tender"
                             string="Approve" type="object"
-                            icon="fa-check"/>
+                            icon="fa-check"
+                            attrs="{'invisible': ['|',('tender_state', '&lt;&gt;', 'selection'), ('approved_tender', '=', True)]}"/>
                     <button name="button_unapprove_tender"
                             string="Un-Approve"
                             type="object"
-                            icon="gtk-redo"/>
+                            icon="gtk-redo"
+                            attrs="{'invisible': ['|',('tender_state', '&lt;&gt;', 'selection'), ('approved_tender', '=', False)]}"/>
                 </field>
             </field>
         </record>

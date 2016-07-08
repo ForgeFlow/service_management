@@ -20,7 +20,7 @@ class ProductSupplierinfo(models.Model):
                                 store=True,
                                 readonly=True)
     tender_state = fields.Selection(_STATES,
-                                    string='Tender States',
+                                    string='Tender State',
                                     related='tender_id.state',
                                     readonly=True)
     approved_tender = fields.Boolean(string='Approved in Tender',
