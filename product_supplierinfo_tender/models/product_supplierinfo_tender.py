@@ -79,6 +79,7 @@ class ProductSupplierinfoTender(models.Model):
     def button_draft(self):
         for rec in self:
             rec.state = 'draft'
+            rec.bid_ids.button_open()
 
     @api.multi
     def button_open(self):
@@ -100,7 +101,6 @@ class ProductSupplierinfoTender(models.Model):
     def button_cancel(self):
         for rec in self:
             rec.state = 'cancel'
-
 
     @api.model
     def _prepare_bid(self, tender, supplier):

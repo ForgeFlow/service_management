@@ -66,3 +66,13 @@ class ProductSupplierinfoBid(models.Model):
     def button_close(self):
         for rec in self:
             rec.state = 'close'
+
+    @api.multi
+    def button_open(self):
+        for rec in self:
+            rec.state = 'open'
+
+    @api.multi
+    def button_cancel(self):
+        for rec in self:
+            rec.state = 'cancel'

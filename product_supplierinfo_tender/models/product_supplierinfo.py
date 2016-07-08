@@ -2,6 +2,7 @@
 # © 2015 Eficent Business and IT Consulting Services S.L.
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 from openerp import _, api, fields, models
+from openerp.exceptions import UserError, ValidationError
 
 _STATES = [('draft', 'Draft'), ('open', 'Call for Bids'),
            ('selection', 'Bid Selection'), ('done', 'Completed'),
@@ -35,3 +36,29 @@ class ProductSupplierinfo(models.Model):
     def button_unapprove_tender(self):
         for rec in self:
             rec.approved_tender = False
+
+    @api.multi
+    @api.depends('bid_id', 'tender_id')
+    def _compute_is_editable(self):
+        super(ProductSupplierinfo, self)._compute_is_editable()
+        for rec in self:
+            if (rec.bid_id and rec.bid_id.state == 'cancel') or \
+                    (rec.tender_id and rec.tender_id.state
+                    not in ['draft', 'open']):
+                rec.is_editable = False
+
+    @api.multi
+    def _compute_state(self):
+        super(ProductSupplierinfo, self)._compute_state()
+        for rec in self:
+            if rec.bid_id.state == 'cancel':
+                rec.state = 'closed'
+
+    @api.multi
+    def unlink(self):
+        for rec in self:
+            if rec.bid_id.state in ['close', 'cancel']:
+                raise UserError(
+                    _('You cannot do that on an pricelist that is related '
+                      'to a closed or cancelled bid.'))
+        return super(ProductSupplierinfo, self).unlink()

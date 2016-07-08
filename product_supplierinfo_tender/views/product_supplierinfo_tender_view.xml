@@ -9,7 +9,7 @@
                 <form string="Pricelist Tender">
                     <header>
                         <button name="button_draft"
-                            states="open,cancel"
+                            states="open,selection,done,cancel"
                             string="Reset"
                             type="object"/>
                         <button name="button_open"
