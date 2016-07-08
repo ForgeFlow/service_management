@@ -62,7 +62,7 @@
                                         name="%(product_supplierinfo_tender.open_view_product_supplierinfo_bid_all)d"
                                         context="{'search_default_tender_id': active_id,'default_tender_id': active_id}"/>
                                 <button name="%(action_product_supplierinfo_tender_create_bid)d" type="action"
-                                        string="Request a Bid" icon="fa-cogs"
+                                        string="Encode Bids" icon="fa-cogs"
                                         attrs="{'invisible': ['|', ('line_ids','=',[]),('state', 'in', ('draft','selection','done','cancel'))]}"/>
                                 <field name="bid_ids" nolabel="True"
                                        options="{'no_create': True}"/>

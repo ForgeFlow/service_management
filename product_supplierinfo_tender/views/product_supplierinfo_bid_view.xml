@@ -8,6 +8,18 @@
             <field name="arch" type="xml">
                 <form string="Pricelist Bid">
                     <header>
+                        <button name="button_open"
+                            string="Reopen"
+                            type="object"
+                            attrs="{'invisible': ['|', ('state', 'not in', ['close', 'cancel']), ('tender_state', 'not in', ['draft', 'open'])]}"/>
+                        <button name="button_close"
+                            string="Close"
+                            attrs="{'invisible': ['|', ('state', '!=', 'open'), ('tender_state', '!=', 'open')]}"
+                            type="object"/>
+                        <button name="button_cancel"
+                            string="Cancel"
+                            attrs="{'invisible': ['|', ('state', '=', 'cancel'), ('tender_state', '=', 'done')]}"
+                            type="object"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
@@ -17,7 +29,8 @@
                             </h1>
                         </div>
                         <group>
-                            <field name="tender_id"/>
+                            <label for="tender_id" string="Tender"/>
+                            <div><field name="tender_id" class="oe_inline"/> - <field name="tender_state" class="oe_inline"/></div>
                             <field name="partner_id"/>
                             <field name="currency_id" groups="base.group_multi_currency"/>
                             <field name="company_id"
