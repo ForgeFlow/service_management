@@ -10,9 +10,8 @@
     "author": "Eficent Business and IT Consulting Services S.L.",
     "website": "https://www.odoo-community.org",
     "license": "LGPL-3",
-    "depends": ['product',
+    "depends": ['purchase',
                 'product_supplierinfo_editable',
-                'product_supplierinfo_state'
                 ],
     "data": [
         'security/ir.model.access.csv',
@@ -22,6 +21,8 @@
         'views/product_supplierinfo_bid_view.xml',
         'views/product_supplierinfo_tender_view.xml',
         'views/product_supplierinfo_view.xml',
+        'views/report_pricelist_bid.xml',
+        'pricelistbid_report.xml',
     ],
     "installable": True,
 }
