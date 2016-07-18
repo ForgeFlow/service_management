@@ -22,7 +22,8 @@
         'views/product_supplierinfo_tender_view.xml',
         'views/product_supplierinfo_view.xml',
         'views/report_pricelist_bid.xml',
-        'pricelistbid_report.xml',
+        'views/report_pricelist_tender.xml',
+        'pricelist_report.xml',
     ],
     "installable": True,
 }
