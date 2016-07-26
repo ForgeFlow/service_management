@@ -28,7 +28,8 @@
 
       <menuitem id="menu_product" action="product_normal_action_purchase"
                 name="Product Variants"
-      parent="purchase.menu_procurement_management" groups="product.group_product_variant" sequence="9"/>
+      parent="purchase.menu_procurement_management"
+                groups="product.group_product_variant" sequence="21"/>
 
     </data>
 </openerp>
