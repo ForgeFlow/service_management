@@ -42,7 +42,7 @@
                                     <tree string="Supplier Pricelists"
                                           editable="bottom">
                                         <field name="name"/>
-                                        <field name="product_tmpl_id"/>
+                                        <field name="product_id"/>
                                         <field name="min_qty"/>
                                         <field name="price" string="Price"/>
                                         <field name="date_start"/>

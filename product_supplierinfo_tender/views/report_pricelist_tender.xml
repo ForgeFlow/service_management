@@ -33,7 +33,7 @@
                 <tbody>
                     <tr t-foreach="o.line_ids" t-as="tender">
                         <td>
-                            <span t-field="tender.product_tmpl_id"/>
+                            <span t-field="tender.product_id"/>
                         </td>
                         <td class="text-center">
                             <span t-field="tender.min_qty"/>

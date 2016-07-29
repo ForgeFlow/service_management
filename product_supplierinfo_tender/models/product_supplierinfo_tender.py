@@ -115,7 +115,8 @@ class ProductSupplierinfoTender(models.Model):
         return {
             'bid_id': bid_id,
             'name': supplier.id,
-            'product_tmpl_id': line.product_tmpl_id.id,
+            'product_tmpl_id': line.product_id.product_tmpl_id.id,
+            'product_id': line.product_id.id,
             'company_id': tender.company_id.id,
             'currency_id': tender.currency_id.id,
             'min_qty': line.min_qty
@@ -146,11 +147,11 @@ class ProductSupplierinfoTenderLine(models.Model):
     tender_id = fields.Many2one(string='Tender',
                                 comodel_name='product.supplierinfo.tender',
                                 copy=False)
-    product_tmpl_id = fields.Many2one('product.template',
-                                      string='Product Template',
-                                      domain=[('purchase_ok', '=', True)],
-                                      change_default=True, required=True)
-    product_uom_id = fields.Many2one(related='product_tmpl_id.uom_id',
+    product_id = fields.Many2one('product.product',
+                                 string='Product',
+                                 domain=[('purchase_ok', '=', True)],
+                                 change_default=True, required=True)
+    product_uom_id = fields.Many2one(related='product_id.uom_id',
                                      string='Product Unit of Measure')
     min_qty = fields.Float(string='Minimum Quantity', digits=dp.get_precision(
-        'Product Unit of Measure'))
+        'Product Unit of Measure'), default=1)

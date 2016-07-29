@@ -38,7 +38,7 @@
                             <span t-field="bids.name"/>
                         </td>
                         <td class="text-center">
-                            <span t-field="bids.product_tmpl_id"/>
+                            <span t-field="bids.product_id"/>
                         </td>
                         <td class="text-center">
                             <span t-field="bids.min_qty"/>

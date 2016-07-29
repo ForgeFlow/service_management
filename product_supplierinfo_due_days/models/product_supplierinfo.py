@@ -24,6 +24,9 @@ class ProductSupplierinfo(models.Model):
     def _compute_due_days(self):
         today_date = fields.Date.from_string(fields.Date.today())
         for rec in self:
+            rec.due_days = 0
             date_end = fields.Date.from_string(rec.date_end)
             if rec.date_end:
-                rec.due_days = (date_end - today_date).days
+                due_days = (date_end - today_date).days
+                if due_days >= 0:
+                    rec.due_days = due_days
